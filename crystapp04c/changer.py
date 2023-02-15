@@ -24,12 +24,12 @@ class Changer:
         result = []
         for child in self.files:
             if not (child.suffix == ".csv"):
-                # self._log.debug("%s skipped, not a csv", child.name)
+                self._log.info("%s skipped, not a csv", child.name)
                 result.append(None)
             else:
                 with child.open(mode="r") as file:
                     header = file.readline()
-                    # self._log.debug("%s", header)
+                    self._log.debug("%s", header)
                     if header.startswith(HEADER):
                         result.append(True)
                     else:

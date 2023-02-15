@@ -10,6 +10,10 @@ class changerTester(unittest.TestCase):
         self._log = getLogger(__name__)
         self.changer = Changer("tests/")
         # mock test.csv & test_no_header.csv
+        with open("tests/.test.csv", mode="w") as file:
+            file.writelines([HEADER,TEST])
+        with open("tests/.test_no_header.csv", mode="w") as file:
+            file.writelines([TEST])
         return super().setUp()
 
     def test_csv_to_list(self):
@@ -25,33 +29,34 @@ class changerTester(unittest.TestCase):
     def test_csv_file(self):
         right = Changer("tests/.test.csv")
         self.assertTrue(right.validate_csv_header()[0])
-        wrong = Changer("tests/.test_header.csv")
+        wrong = Changer("tests/.test_no_header.csv")
         self.assertFalse(wrong.validate_csv_header()[0])
-        
+
     def test_functionallity(self):
         lenght_before = []
         # read first CSV
-        file = self.changer.get_first_valid_csv()
-        if file:
-            with file.open() as file:
+        file_path = self.changer.get_first_valid_csv()
+        if file_path:
+            self._log.info("test_functionallity: %s",file_path.name)
+            with file_path.open() as file:
                 for line in file.readlines():
                     listed = line.split(",")
                     lenght_before.append(len(listed))
 
         # add two new lines at #1 & #3 position
-        # self.changer.add_constants_to_columns()
+        self.changer.add_constants_to_columns()
 
         lenght_after = []
-        file = self.changer.get_first_valid_csv()
-        if file:
-            self._log.debug("test_functionallity: %s",file.name)
-            with file.open() as file:
+        # file = self.changer.get_first_valid_csv()
+        if file_path:
+            self._log.info("test_functionallity: %s",file_path.name)
+            with file_path.open() as file:
                 for line in file.readlines():
                     listed = line.split(",")
                     lenght_after.append(len(listed))
 
-        self._log.debug("test_functionallity: %s, %s", lenght_before, lenght_after)
+        self._log.info("test_functionallity: %s, %s", lenght_before, lenght_after)
 
         # run some tests
-        # self.assertEqual(2, lenght_after[1]-lenght_before[1])
+        self.assertEqual(2, lenght_after[1]-lenght_before[1])
         self.assertEqual(lenght_after[1],lenght_after[2])
