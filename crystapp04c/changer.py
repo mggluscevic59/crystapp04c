@@ -3,6 +3,8 @@ import logging
 from pathlib import Path
 from crystapp04c.constants import HEADER
 
+INTEGRATION = None
+CONCENTRATION = None
 
 class Changer:
     def __init__(self, path) -> None:
@@ -33,3 +35,12 @@ class Changer:
                     else:
                         result.append(False)
         return result
+
+    def add_constants_to_columns(self):
+        pass
+
+    def get_first_valid_csv(self):
+        validation = self.validate_csv_header()
+        for i in range(len(self.files)):
+            if validation[i]:
+                return self.files[i]

@@ -26,3 +26,25 @@ class changerTester(unittest.TestCase):
         self.assertTrue(right.validate_csv_header()[0])
         wrong = Changer("tests/.test_header.csv")
         self.assertFalse(wrong.validate_csv_header()[0])
+        
+    def test_functionallity(self):
+        lenght_before = []
+        # read first CSV
+        file = self.changer.get_first_valid_csv()
+        if file:
+            with file.open() as file:
+                for line in file.readlines():
+                    listed = line.split(",")
+                    lenght_before.append(len(listed))
+        self.changer.add_constants_to_columns()
+
+        lenght_after = []
+        file = self.changer.get_first_valid_csv()
+        if file:
+            self._log.debug("test_functionallity: %s",file.name)
+            with file.open() as file:
+                for line in file.readlines():
+                    listed = line.split(",")
+                    lenght_after.append(len(listed))
+
+        self._log.debug("test_functionallity: %s, %s", lenght_before, lenght_after)
