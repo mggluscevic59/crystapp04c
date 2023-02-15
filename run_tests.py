@@ -5,4 +5,5 @@ from tests.test_changer import changerTester
 
 if __name__ == "__main__":
     basicConfig(level=DEBUG)
-    unittest.main()
+    # 0=quiet; 1=default; 2=verbose
+    unittest.main(verbosity=2)

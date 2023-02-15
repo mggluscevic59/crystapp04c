@@ -19,10 +19,17 @@ class Changer:
         raise FileNotFoundError("File is not csv nor directory")
 
     def validate_csv_header(self):
+        result = []
         for child in self.files:
-            if not child.suffix == ".csv":
-                self._log.debug("%s skipped, not a csv", child.name)
+            if not (child.suffix == ".csv"):
+                # self._log.debug("%s skipped, not a csv", child.name)
+                result.append(None)
             else:
                 with child.open() as file:
-                    header = file.readline
-                    self._log.debug("%s", header)
+                    header = file.readline()
+                    # self._log.debug("%s", header)
+                    if header.startswith(HEADER):
+                        result.append(True)
+                    else:
+                        result.append(False)
+        return result

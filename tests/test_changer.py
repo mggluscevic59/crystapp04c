@@ -22,11 +22,7 @@ class changerTester(unittest.TestCase):
         self.assertRaises(FileNotFoundError, lambda: Changer("run_tests.py"))
 
     def test_csv_file(self):
-        try:
-            right = Changer("tests/.test.csv")
-            right.validate_csv_header()
-        except SyntaxError:
-            pass
-            # self.fail("Changer('tests/.test.csv') raises SyntaxError unexpectedly!")
+        right = Changer("tests/.test.csv")
+        self.assertTrue(right.validate_csv_header()[0])
         wrong = Changer("tests/.test_header.csv")
-        # self.assertRaises(SyntaxError, lambda: wrong.validate_csv_header())
+        self.assertFalse(wrong.validate_csv_header()[0])
