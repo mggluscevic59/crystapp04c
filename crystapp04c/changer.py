@@ -3,8 +3,8 @@ import logging
 from pathlib import Path
 from crystapp04c.constants import HEADER
 
-INTEGRATION = None
-CONCENTRATION = None
+INTEGRATION = 1
+CONCENTRATION = 1
 
 class Changer:
     def __init__(self, path) -> None:
@@ -27,7 +27,7 @@ class Changer:
                 # self._log.debug("%s skipped, not a csv", child.name)
                 result.append(None)
             else:
-                with child.open() as file:
+                with child.open(mode="r") as file:
                     header = file.readline()
                     # self._log.debug("%s", header)
                     if header.startswith(HEADER):
@@ -37,7 +37,26 @@ class Changer:
         return result
 
     def add_constants_to_columns(self):
-        pass
+        validation = self.validate_csv_header()
+        for i in range(len(self.files)):
+            pass
+            # valid csv file & constants not null
+            if validation[i] and INTEGRATION and CONCENTRATION:
+                with self.files[i].open(mode="r") as file:
+                    all_lines = file.readlines()
+                with self.files[i].open(mode="w") as file:
+                    for index, line in enumerate(all_lines):
+                        enlisted = line.split(",")
+                        # write first line a description
+                        if index == 0:
+                            enlisted.insert(0, "integration")
+                            enlisted.insert(2, "concetration")
+                        else:
+                            enlisted.insert(0, str(INTEGRATION))
+                            enlisted.insert(2, str(CONCENTRATION))
+                        line = ",".join(enlisted)
+                        self._log.debug(line)
+                        file.writelines(line)
 
     def get_first_valid_csv(self):
         validation = self.validate_csv_header()
