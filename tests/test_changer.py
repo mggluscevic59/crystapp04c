@@ -48,3 +48,8 @@ class changerTester(unittest.TestCase):
                     lenght_after.append(len(listed))
 
         self._log.debug("test_functionallity: %s, %s", lenght_before, lenght_after)
+
+        # added two columns
+        self.assertEqual(2, lenght_after[1]-lenght_before[1])
+        self.assertEqual(lenght_after[1],lenght_after[2])
+        
