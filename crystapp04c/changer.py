@@ -7,9 +7,14 @@ INTEGRATION = 1
 CONCENTRATION = 1
 
 class Changer:
-    def __init__(self, path) -> None:
+    def __init__(self, path, t=INTEGRATION, c=CONCENTRATION) -> None:
         self.files = self.path_to_list(path)
         self._log = logging.getLogger(__name__)
+        self.data = {
+            "integration" : t,
+            "": 0,
+            "concentration" : c
+        }
 
     def path_to_list(self, new_path) -> list[Path]:
         path = Path(new_path)
@@ -49,11 +54,11 @@ class Changer:
                         enlisted = line.split(",")
                         # write first line a description
                         if index == 0:
-                            enlisted.insert(0, "integration")
-                            enlisted.insert(2, "concetration")
+                            enlisted.insert(0, list(self.data.keys())[0])
+                            enlisted.insert(2, list(self.data.keys())[2])
                         else:
-                            enlisted.insert(0, str(INTEGRATION))
-                            enlisted.insert(2, str(CONCENTRATION))
+                            enlisted.insert(0, str(list(self.data.values())[0]))
+                            enlisted.insert(2, str(list(self.data.values())[2]))
                         line = ",".join(enlisted)
                         self._log.debug(line)
                         file.writelines(line)
