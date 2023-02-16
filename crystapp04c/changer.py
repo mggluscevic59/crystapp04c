@@ -44,9 +44,8 @@ class Changer:
     def add_constants_to_columns(self):
         validation = self.validate_csv_header()
         for i in range(len(self.files)):
-            pass
             # valid csv file & constants not null
-            if validation[i] and INTEGRATION and CONCENTRATION:
+            if validation[i] and self.integration and self.concentration:
                 with self.files[i].open(mode="r") as file:
                     all_lines = file.readlines()
                 with self.files[i].open(mode="w") as file:
@@ -62,6 +61,9 @@ class Changer:
                         line = ",".join(enlisted)
                         self._log.debug(line)
                         file.writelines(line)
+            elif validation[i] is not None:
+                mssg = f"File '{self.files[i].name}' is not properly formatted!"
+                # raise ValueError(str(mssg))
 
     def get_first_valid_csv(self):
         validation = self.validate_csv_header()

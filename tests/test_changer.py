@@ -17,7 +17,8 @@ class changerTester(unittest.TestCase):
         return super().setUp()
 
     def test_csv_to_list(self):
-        direct = Changer("tests/.test.csv")
+        # direct = Changer("tests/.test.csv")
+        direct = Changer(self.changer.get_first_valid_csv())
         self._log.debug("test_csv_to_list: %s", direct.files)
         self.assertIsInstance(direct.files, list)
 
@@ -60,3 +61,6 @@ class changerTester(unittest.TestCase):
         # run some tests
         self.assertEqual(2, lenght_after[1]-lenght_before[1])
         self.assertEqual(lenght_after[1],lenght_after[2])
+
+    def test_no_header(self):
+        pass
