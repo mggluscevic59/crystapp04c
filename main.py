@@ -14,7 +14,7 @@ if __name__ == "__main__":
     for key, _ in data.items():
         data[key] = float(input(f"{key}: "))
 
-    path = input("Folder: ")
+    path = input("File: ")
     ch = Changer(
         path=path,
         t=data["integration"],
