@@ -7,9 +7,11 @@ INTEGRATION = 1
 CONCENTRATION = 1
 
 class Changer:
-    def __init__(self, path) -> None:
+    def __init__(self, path, integration=INTEGRATION, concentration=CONCENTRATION) -> None:
         self.files = self.path_to_list(path)
         self._log = logging.getLogger(__name__)
+        self.integration = integration
+        self.concentration = concentration
 
     def path_to_list(self, new_path) -> list[Path]:
         path = Path(new_path)
@@ -40,7 +42,7 @@ class Changer:
         validation = self.validate_csv_header()
         for i in range(len(self.files)):
             # valid csv file & constants not null
-            if validation[i] and INTEGRATION and CONCENTRATION:
+            if validation[i] and self.integration and self.concentration:
                 with self.files[i].open(mode="r") as file:
                     all_lines = file.readlines()
                 with self.files[i].open(mode="w") as file:
@@ -51,8 +53,8 @@ class Changer:
                             enlisted.insert(0, "integration")
                             enlisted.insert(2, "concetration")
                         else:
-                            enlisted.insert(0, str(INTEGRATION))
-                            enlisted.insert(2, str(CONCENTRATION))
+                            enlisted.insert(0, str(self.integration))
+                            enlisted.insert(2, str(self.concentration))
                         line = ",".join(enlisted)
                         self._log.debug(line)
                         file.writelines(line)
