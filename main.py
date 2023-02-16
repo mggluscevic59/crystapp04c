@@ -8,11 +8,11 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     data = {
-        "integration" : 3,
-        "concentration" : 3
+        "integration" : 0.0,
+        "concentration" : 0.0
     }
     for key, _ in data.items():
-        data[key] = int(input(f"{key}: "))
+        data[key] = float(input(f"{key}: "))
 
     path = input("Folder: ")
     ch = Changer(

@@ -3,8 +3,8 @@ import logging
 from pathlib import Path
 from crystapp04c.constants import HEADER
 
-INTEGRATION = 1
-CONCENTRATION = 1
+INTEGRATION = 0.0
+CONCENTRATION = 0.0
 
 class Changer:
     def __init__(self, path, t=INTEGRATION, c=CONCENTRATION) -> None:
