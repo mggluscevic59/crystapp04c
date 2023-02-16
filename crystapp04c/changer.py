@@ -45,7 +45,7 @@ class Changer:
         validation = self.validate_csv_header()
         for i in range(len(self.files)):
             # valid csv file & constants not null
-            if validation[i] and self.integration and self.concentration:
+            if validation[i]:
                 with self.files[i].open(mode="r") as file:
                     all_lines = file.readlines()
                 with self.files[i].open(mode="w") as file:
@@ -64,6 +64,7 @@ class Changer:
             elif validation[i] is not None:
                 mssg = f"File '{self.files[i].name}' is not properly formatted!"
                 # raise ValueError(str(mssg))
+                self._log.debug(mssg)
 
     def get_first_valid_csv(self):
         validation = self.validate_csv_header()
