@@ -18,3 +18,6 @@ class revisorUnit(unittest.TestCase):
 
         # assert
         self.assertTrue(rez)
+
+    def test_mock(self):
+        pass
