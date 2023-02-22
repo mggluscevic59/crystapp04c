@@ -4,7 +4,7 @@ from pathlib import Path
 from crystapp04c.revisor import Revisor
 
 class revisorUnit(unittest.TestCase):
-    def test_mockup(self):
+    def test_path_is_dir(self):
         # arrange
         destination = "tests/"
         map = Path(destination)
@@ -18,4 +18,3 @@ class revisorUnit(unittest.TestCase):
 
         # assert
         self.assertTrue(rez)
-        # self.assertTrue(False)

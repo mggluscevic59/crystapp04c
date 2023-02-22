@@ -7,10 +7,18 @@ _LOG = logging.getLogger(__name__)
 
 def populate_map(path:PATH):
     rez = [Path("")]
+
     if isinstance(path, Path):
         rez = [path]
     elif isinstance(path, str):
         rez = [Path(path)]
+    
+    # map => list
+    if rez[0].is_dir():
+        i = []
+        for child in rez[0].iterdir():
+            i.append(child)
+        return i
     return rez
 
 class Revisor:
